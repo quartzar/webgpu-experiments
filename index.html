@@ -1,8 +1,56 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>WebGPU Life</title>
+    <head>
+        <meta charset="utf-8">
+        <title>WebGPU Life</title>
+    </head>
 
+    <body>
+        <canvas width = "512" height = "512"></canvas>
+        <script type = "module">
+            // WebGPU code goes here:)
+
+            // ----------------- Setup -----------------
+            
+            const canvas = document.querySelector("canvas");
+
+            // Verify that the browser supports WebGPU
+            if (!navigator.gpu) {
+                console.error("WebGPU is not supported on this browser");
+            }
+
+            // Request an adapter (a.k.a. representation of physical GPU)
+            // [Using default adapte; can also request "high-performance" adapter]
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) {
+                console.error("Failed to find a suitable GPUAdapter");
+            }
+
+            // Request a device (the interface through which we interact with the GPU)
+            const device = await adapter.requestDevice();
+            if (!device) {
+                console.error("Failed to create GPUDevice");
+            }
+
+            // Create a GPU canvas context
+            const context = canvas.getContext("webgpu");
+            const canvasFormat = context.getPreferredFormat(adapter); // texture format
+            
+            context.configure({
+                device: device,
+                format: canvasFormat
+            });
+
+            // ----------------- Shaders -----------------
+
+            // Create a GPUCommandEncoder for the GPUCommands that we want to submit to the GPU
+            const commandEncoder = device.createCommandEncoder();
+            
+
+    
+
+        </script>
+        <h1>WebGPU Life</h1>
+    </body>
 </html>
